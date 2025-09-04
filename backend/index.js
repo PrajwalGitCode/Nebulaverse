@@ -15,7 +15,10 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: ["https://reliable-empanada-b77023.netlify.app"],
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes
