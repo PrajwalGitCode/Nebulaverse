@@ -10,7 +10,7 @@ export default function Signup({ setUser }) {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
+      const res = await fetch("https://nebulaverse.onrender.com/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
@@ -34,11 +34,11 @@ export default function Signup({ setUser }) {
     <div className="flex h-screen items-center justify-center bg-gradient-to-br from-gray-900 to-black text-white">
       <form onSubmit={handleSignup} className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-xl w-96">
         <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
-        <input type="text" placeholder="Username" value={username} onChange={(e)=>setUsername(e.target.value)}
+        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}
           className="w-full p-3 mb-4 rounded bg-black/40 focus:outline-none" required />
-        <input type="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)}
+        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
           className="w-full p-3 mb-4 rounded bg-black/40 focus:outline-none" required />
-        <input type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
           className="w-full p-3 mb-4 rounded bg-black/40 focus:outline-none" required />
         <button type="submit" className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition">Signup</button>
       </form>

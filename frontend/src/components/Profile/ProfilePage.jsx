@@ -21,13 +21,13 @@ export default function ProfilePage() {
     const fetchData = async () => {
       try {
         const [profileRes, requestsRes, postsRes] = await Promise.all([
-          fetch("http://localhost:5000/api/auth/me", {
+          fetch("https://nebulaverse.onrender.com/api/auth/me", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          fetch("http://localhost:5000/api/friends/requests", {
+          fetch("https://nebulaverse.onrender.com/api/friends/requests", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          fetch("http://localhost:5000/api/posts", {
+          fetch("https://nebulaverse.onrender.com/api/posts", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -67,7 +67,7 @@ export default function ProfilePage() {
 
   const handleRespond = async (id, action) => {
     try {
-      await fetch(`http://localhost:5000/api/friends/${id}/respond`, {
+      await fetch(`https://nebulaverse.onrender.com/api/friends/${id}/respond`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -14,7 +14,7 @@ export default function Navbar({ user, setUser }) {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:5000/api/auth/logout", { method: "POST" });
+      await fetch("https://nebulaverse.onrender.com/api/auth/logout", { method: "POST" });
     } catch (err) {
       console.error(err);
     }

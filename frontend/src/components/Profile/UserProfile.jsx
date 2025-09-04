@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-const socket = io("http://localhost:5000");
+const socket = io("https://nebulaverse.onrender.com");
 import { useParams, Link } from "react-router-dom";
 import { FaHeart, FaRegHeart, FaRegCommentDots } from "react-icons/fa";
 
@@ -36,13 +36,13 @@ export default function UserProfile() {
             setLoading(true);
             try {
                 // Profile
-                const resProfile = await fetch(`http://localhost:5000/api/auth/${id}`, { headers });
+                const resProfile = await fetch(`https://nebulaverse.onrender.com/api/auth/${id}`, { headers });
                 const dataProfile = await resProfile.json();
                 dataProfile.friends = normalizeFriends(dataProfile.friends);
                 setProfile(dataProfile);
 
                 // Current user
-                const resMe = await fetch(`http://localhost:5000/api/auth/me`, { headers });
+                const resMe = await fetch(`https://nebulaverse.onrender.com/api/auth/me`, { headers });
                 const dataMe = await resMe.json();
                 dataMe.friends = normalizeFriends(dataMe.friends);
                 setCurrentUser(dataMe);
@@ -51,7 +51,7 @@ export default function UserProfile() {
                 if (dataMe.friends.includes(id)) {
                     setStatus("friend");
                 } else {
-                    const reqRes = await fetch(`http://localhost:5000/api/friends/requests`, { headers });
+                    const reqRes = await fetch(`https://nebulaverse.onrender.com/api/friends/requests`, { headers });
                     const requests = await reqRes.json();
                     const sent = requests.some(
                         (r) => String(r.from?._id) === String(dataMe._id) && String(r.to?._id) === String(id)
@@ -60,7 +60,7 @@ export default function UserProfile() {
                 }
 
                 // User's posts
-                const resPosts = await fetch(`http://localhost:5000/api/posts/user/${id}`, { headers });
+                const resPosts = await fetch(`https://nebulaverse.onrender.com/api/posts/user/${id}`, { headers });
                 const dataPosts = await resPosts.json();
                 setPosts(dataPosts);
 
@@ -69,7 +69,7 @@ export default function UserProfile() {
                 const totalComments = dataPosts.reduce((sum, p) => sum + (p.comments?.length || 0), 0);
 
                 // Comments made by this user
-                const resAllPosts = await fetch("http://localhost:5000/api/posts", { headers });
+                const resAllPosts = await fetch("https://nebulaverse.onrender.com/api/posts", { headers });
                 const allPosts = await resAllPosts.json();
                 const commentsMade = allPosts.reduce(
                     (sum, p) =>
@@ -128,7 +128,7 @@ export default function UserProfile() {
         );
 
         try {
-            await fetch(`http://localhost:5000/api/posts/${postId}/like`, {
+            await fetch(`https://nebulaverse.onrender.com/api/posts/${postId}/like`, {
                 method: "POST",
                 headers,
                 body: JSON.stringify({ userId }),
@@ -141,7 +141,7 @@ export default function UserProfile() {
     const handleComment = async (postId, text) => {
         if (!text.trim()) return;
         try {
-            await fetch(`http://localhost:5000/api/posts/${postId}/comment`, {
+            await fetch(`https://nebulaverse.onrender.com/api/posts/${postId}/comment`, {
                 method: "POST",
                 headers,
                 body: JSON.stringify({ userId, text }),
@@ -153,7 +153,7 @@ export default function UserProfile() {
 
     const handleFriendRequest = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/friends/send`, {
+            const res = await fetch(`https://nebulaverse.onrender.com/api/friends/send`, {
                 method: "POST",
                 headers,
                 body: JSON.stringify({ to: id }),

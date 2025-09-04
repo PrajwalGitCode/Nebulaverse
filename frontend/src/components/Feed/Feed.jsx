@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 import { FaHeart, FaRegHeart, FaRegCommentDots } from "react-icons/fa";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://nebulaverse.onrender.com");
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
@@ -17,7 +17,7 @@ export default function Feed() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/posts", {
+        const res = await fetch("https://nebulaverse.onrender.com/api/posts", {
           headers: { Authorization: token ? `Bearer ${token}` : undefined },
         });
         if (!res.ok) throw new Error(`Error: ${res.status}`);
@@ -49,7 +49,7 @@ export default function Feed() {
     e.preventDefault();
     if (!newPost.trim()) return;
     try {
-      const res = await fetch("http://localhost:5000/api/posts", {
+      const res = await fetch("https://nebulaverse.onrender.com/api/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export default function Feed() {
     );
 
     try {
-      await fetch(`http://localhost:5000/api/posts/${id}/like`, {
+      await fetch(`https://nebulaverse.onrender.com/api/posts/${id}/like`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export default function Feed() {
   const handleComment = async (id, text) => {
     if (!text.trim()) return;
     try {
-      await fetch(`http://localhost:5000/api/posts/${id}/comment`, {
+      await fetch(`https://nebulaverse.onrender.com/api/posts/${id}/comment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -165,8 +165,8 @@ export default function Feed() {
               <button
                 onClick={() => handleLike(post._id)}
                 className={`flex items-center gap-2 transition ${post.likes?.some((likeId) => String(likeId) === userId)
-                    ? "text-pink-500"
-                    : "text-white hover:text-gray-400"
+                  ? "text-pink-500"
+                  : "text-white hover:text-gray-400"
                   }`}
               >
                 {post.likes?.some((likeId) => String(likeId) === userId) ? (
