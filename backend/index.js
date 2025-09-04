@@ -10,13 +10,12 @@ import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
 import friendRoutes from "./routes/friends.js";
 
-
 dotenv.config();
 const app = express();
 
 // Middlewares
 app.use(cors({
-  origin: ["https://reliable-empanada-b77023.netlify.app"],
+  origin: ["https://reliable-empanada-b77023.netlify.app"], // your Netlify frontend
   credentials: true
 }));
 app.use(express.json());
@@ -32,8 +31,9 @@ const server = createServer(app);
 // Attach Socket.IO
 export const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // your React frontend port
+    origin: ["https://reliable-empanada-b77023.netlify.app"], // use Netlify URL here
     methods: ["GET", "POST"],
+    credentials: true
   },
 });
 
@@ -45,6 +45,13 @@ io.on("connection", (socket) => {
   });
 });
 
+// Optional: Example for real-time comments
+io.on("connection", (socket) => {
+  socket.on("newComment", (comment) => {
+    io.emit("newComment", comment); // broadcast to all clients
+  });
+});
+
 const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
@@ -53,7 +60,7 @@ mongoose
   .then(() => {
     console.log("✅ MongoDB connected");
     server.listen(PORT, () =>
-      console.log(`✅ Server running at http://localhost:${PORT}`)
+      console.log(`✅ Server running on port ${PORT}`)
     );
   })
   .catch((err) => console.error("❌ MongoDB connection error:", err));
